@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mead Nuclear Plant | Department of Energy of New Sloboda</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0c0e;
+            --bg-secondary: #121519;
+            --bg-card: #181c23;
+            --border-color: #2a3240;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-amber: #f59e0b;
+            --accent-blue: #3b82f6;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --font-head: 'Oswald', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        [data-theme="alert"] {
+            --accent-green: #ef4444;
+            --border-color: #7f1d1d;
+        }
+
+        [data-theme="highload"] {
+            --accent-green: #f59e0b;
+            --border-color: #78350f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-family: var(--font-mono);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Scanline overlay */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 21, 25, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 99999;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+
+        header {
+            background: rgba(10, 12, 14, 0.95);
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--accent-green);
+        }
+
+        .logo-text h1 {
+            font-family: var(--font-head);
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: var(--font-head);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent-green);
+        }
+
+        .status-badge {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, rgba(18,21,25,0.8) 0%, rgba(10,12,14,1) 100%), url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80') center/cover;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h2 {
+            font-family: var(--font-head);
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .hero-content h2 span {
+            color: var(--accent-green);
+        }
+
+        .hero-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .stat-card .val {
+            font-family: var(--font-head);
+            font-size: 1.8rem;
+            color: var(--text-main);
+        }
+
+        .stat-card .lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: var(--accent-green);
+            color: #000;
+            font-family: var(--font-head);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            padding: 0.8rem 2rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .btn:hover {
+            filter: brightness(1.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        /* Sidebar status box */
+        .hero-sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-sidebar::before {
+            content: "CLASSIFIED // DOE-NS";
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--bg-primary);
+            padding: 0 0.5rem;
+            font-size: 0.7rem;
+            color: var(--accent-red);
+            letter-spacing: 2px;
+        }
+
+        .hero-sidebar h3 {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .feed-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .feed-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .feed-item i {
+            color: var(--accent-amber);
+            margin-top: 0.2rem;
+        }
+
+        .feed-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .feed-item span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        section {
+            margin-bottom: 6rem;
+        }
+
+        .section-title {
+            font-family: var(--font-head);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title span {
+            color: var(--accent-green);
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1rem;
+            max-width: 800px;
+        }
+
+        /* Lore Grid */
+        .lore-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .lore-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lore-card::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-green);
+        }
+
+        .lore-card h3 {
+            font-family: var(--font-head);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            color: var(--text-main);
+        }
+
+        .lore-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .meta-tag {
+            display: inline-block;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Factions Grid */
+        .factions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .faction-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-top: 4px solid var(--accent-blue);
+        }
+
+        .faction-card.mexican {
+            border-top-color: var(--accent-red);
+        }
+
+        .faction-card.government {
+            border-top-color: var(--accent-amber);
+        }
+
+        .faction-card h3 {
+            font-family: var(--font-head);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .faction-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Sectors Map */
+        .sectors-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .sector-tab {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 1rem 1.5rem;
+            font-family: var(--font-head);
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .sector-tab.active, .sector-tab:hover {
+            background: var(--accent-green);
+            color: #000;
+            border-color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        .sector-content {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 3rem;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .sector-content.active {
+            display: grid;
+        }
+
+        .sector-info h3 {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .sector-info p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .sector-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .spec-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+        }
+
+        .spec-item .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .spec-item .value {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        .sector-visual {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sector-visual i {
+            font-size: 5rem;
+            color: var(--border-color);
+        }
+
+        .sector-visual .status-tag {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            color: var(--accent-green);
+        }
+
+        /* Roadmap */
+        .roadmap-timeline {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -2.35rem;
+            top: 0.25rem;
+            width: 14px;
+            height: 14px;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-green);
+            border-radius: 50%;
+        }
+
+        .timeline-item.completed::before {
+            background: var(--accent-green);
+        }
+
+        .timeline-item h3 {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 800px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 2px solid var(--border-color);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-col p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 12, 14, 0.85);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            padding: 3rem;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-content h3 {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .modal-input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .modal-input-group input {
+            flex: 1;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 0.8rem;
+            color: var(--text-main);
+            font-family: var(--font-mono);
+        }
+
+        @media(max-width: 1024px) {
+            .hero-container, .sector-content, .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-area">
+                <i class="fa-solid fa-radiation logo-icon"></i>
+                <div class="logo-text">
+                    <h1>Mead Nuclear Plant</h1>
+                    <p>Department of Energy and Coal Industry of New Sloboda</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#lore">Lore</a></li>
+                    <li><a href="#factions">Factions</a></li>
+                    <li><a href="#sectors">Sectors</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                </ul>
+            </nav>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <div class="status-badge">
+                    <div class="status-dot" id="headerDot"></div>
+                    <span id="headerStatusText">FACILITY: NOMINAL</span>
+                </div>
+                <button class="btn btn-secondary" onclick="toggleGlobalAlert()" style="padding: 0.5rem 1rem; font-size: 0.8rem;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> TOGGLE ALERT
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h2>Protect the Core. <span>Power the Capital.</span></h2>
+                <p>Welcome to Mead Nuclear Plant, a critical atomic energy facility built near Lake Mead and the Koshulyn Dam. Amidst the 1996 military invasion of New Sloboda, you must hold the frontline against hostile forces seeking to cut off the capital's electricity grid.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="val">1960s</div>
+                        <div class="lbl">Expansion Era</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="val">1996</div>
+                        <div class="lbl">Frontline Conflict</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="val">3 GW</div>
+                        <div class="lbl">Output Capacity</div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <a href="#" class="btn" onclick="openGameModal(); return false;">
+                        <i class="fa-solid fa-gamepad"></i> Play on Roblox
+                    </a>
+                    <a href="https://discord.gg/b9vuB83fd" target="_blank" class="btn btn-secondary">
+                        <i class="fa-brands fa-discord"></i> Discord Server
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="openGroupModal(); return false;">
+                        <i class="fa-solid fa-shield-halved"></i> DOE-CI Group
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-sidebar">
+                <h3>Frontline Status</h3>
+                <div class="feed-item">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <div>
+                        <span>SOUTHERN FRONTLINE</span>
+                        <p>Mexican Army units sighted near Koshulyn Dam approaches. High alert established.</p>
+                    </div>
+                </div>
+                <div class="feed-item">
+                    <i class="fa-solid fa-bolt"></i>
+                    <div>
+                        <span>CAPITAL GRID FEED</span>
+                        <p>Transmitting stable 500kV to New Sloboda central distribution substations.</p>
+                    </div>
+                </div>
+                <div class="feed-item">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <div>
+                        <span>PLANT SECURITY</span>
+                        <p>All checkpoints reinforced. National Guard and Plant Security on high alert.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Container -->
+    <div class="container">
+
+        <!-- Lore Section -->
+        <section id="lore">
+            <div class="section-title">
+                <i class="fa-solid fa-book-atlas"></i> Historical <span>Background</span>
+            </div>
+            <p class="section-subtitle">The geopolitical and industrial backdrop leading up to the crisis at Mead Nuclear Plant.</p>
+
+            <div class="lore-grid">
+                <div class="lore-card">
+                    <span class="meta-tag">Era: 1960s</span>
+                    <h3>The 10 Nuclear Plants Initiative</h3>
+                    <p>In the 1960s, the Department of Energy and Coal Industry decided to construct at least 10 nuclear power plants across the republic to accommodate rapidly increasing energy consumption and population growth. Mead Nuclear Plant was commissioned as a cornerstone of this ambitious national grid.</p>
+                </div>
+                <div class="lore-card">
+                    <span class="meta-tag">Infrastructure</span>
+                    <h3>Lake Mead & Koshulyn Dam</h3>
+                    <p>The plant was established near Lake Mead, an artificially created water body formed by the massive Koshulyn Dam, named in honor of President Yaroslav Koshulyn. The dam provides essential cooling water flow and auxiliary hydroelectric generation for the complex.</p>
+                </div>
+                <div class="lore-card">
+                    <span class="meta-tag">Conflict: 1996</span>
+                    <h3>The 1996 Frontline Crisis</h3>
+                    <p>In 1996, the Mexican Army invaded the southern states of New Sloboda under the pretext of «liberating» the local Mexican minority—despite the population being overwhelmingly English and Ukrainian. Positioned perilously close to the frontline, Mead Nuclear Plant now faces direct assault as enemies aim to blow up the facility and blackout the capital.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Factions Section -->
+        <section id="factions">
+            <div class="section-title">
+                <i class="fa-solid fa-users-gear"></i> Combat <span>Factions</span>
+            </div>
+            <p class="section-subtitle">The primary forces clashing over control of the energy corridor.</p>
+
+            <div class="factions-grid">
+                <div class="faction-card government">
+                    <span class="meta-tag" style="color: var(--accent-amber);">Defense Forces</span>
+                    <h3>Plant Personnel & Security</h3>
+                    <p>Operators, engineers, and armed internal security forces tasked with maintaining reactor stability while defending the control rooms and turbine halls against saboteurs.</p>
+                </div>
+                <div class="faction-card">
+                    <span class="meta-tag" style="color: var(--accent-blue);">Armed Forces</span>
+                    <h3>New Sloboda Army</h3>
+                    <p>Regular military units deployed to the southern borders and Koshulyn Dam perimeter to hold back the invasion lines and protect critical national infrastructure.</p>
+                </div>
+                <div class="faction-card mexican">
+                    <span class="meta-tag" style="color: var(--accent-red);">Invading Forces</span>
+                    <h3>Mexican Expeditionary Corps</h3>
+                    <p>Aggressive forces pushing through the southern corridor with explicit orders to capture, occupy, or detonate Mead Nuclear Plant to paralyze the capital's power grid.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sectors Section -->
+        <section id="sectors">
+            <div class="section-title">
+                <i class="fa-solid fa-map-location-dot"></i> Facility <span>Sectors</span>
+            </div>
+            <p class="section-subtitle">Key operational zones across the Mead Nuclear Plant and Koshulyn Dam complex.</p>
+
+            <div class="sectors-tabs">
+                <button class="sector-tab active" onclick="switchSector(0)">Dam & Intake</button>
+                <button class="sector-tab" onclick="switchSector(1)">Control Room (BŞU)</button>
+                <button class="sector-tab" onclick="switchSector(2)">Reactor Hall</button>
+                <button class="sector-tab" onclick="switchSector(3)">Turbine Hall</button>
+                <button class="sector-tab" onclick="switchSector(4)">Southern Perimeter</button>
+                <button class="sector-tab" onclick="switchSector(5)">Underground Bunker</button>
+            </div>
+
+            <!-- Sector 1 -->
+            <div class="sector-content active" id="sector-0">
+                <div class="sector-info">
+                    <h3>Koshulyn Dam & Intake</h3>
+                    <p>Named after President Yaroslav Koshulyn, this massive artificial barrier forms Lake Mead and feeds cooling water intake pumps. A critical choke point for controlling water levels and preventing sabotage.</p>
+                    <div class="sector-specs">
+                        <div class="spec-item">
+                            <div class="label">Water Head</div>
+                            <div class="value">120 Meters</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="label">Security Level</div>
+                            <div class="value" style="color: var(--accent-amber);">High Alert</div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="openGameModal()">Deploy to Sector</button>
+                </div>
+                <div class="sector-visual">
+                    <i class="fa-solid fa-water"></i>
+                    <div class="status-tag">SECCTOR-DAM-01</div>
+                </div>
+            </div>
+
+            <!-- Sector 2 -->
+            <div class="sector-content" id="sector-1">
+                <div class="sector-info">
+                    <h3>Central Control Room (BŞU)</h3>
+                    <p>The neural center of the plant. Operators monitor thermal output, coolant pressures, and grid load. Vital target for hostile infiltrators attempting emergency SCRAM or core meltdown.</p>
+                    <div class="sector-specs">
+                        <div class="spec-item">
+                            <div class="label">Clearance</div>
+                            <div class="value">Level 4</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="label">Status</div>
+                            <div class="value" style="color: var(--accent-green);">Operational</div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="openGameModal()">Deploy to Sector</button>
+                </div>
+                <div class="sector-visual">
+                    <i class="fa-solid fa-desktop"></i>
+                    <div class="status-tag">SECTOR-BŞU-02</div>
+                </div>
+            </div>
+
+            <!-- Sector 3 -->
+            <div class="sector-content" id="sector-2">
+                <div class="sector-info">
+                    <h3>Reactor Hall</h3>
+                    <p>Houses the high-capacity atomic core under thick biological shielding. Heavily restricted zone requiring strict radiation safety protocols and armed perimeter patrols.</p>
+                    <div class="sector-specs">
+                        <div class="spec-item">
+                            <div class="label">Radiation</div>
+                            <div class="value">0.12 µSv/h</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="label">Core Temp</div>
+                            <div class="value">320 °C</div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="openGameModal()">Deploy to Sector</button>
+                </div>
+                <div class="sector-visual">
+                    <i class="fa-solid fa-atom"></i>
+                    <div class="status-tag">SECTOR-CORE-03</div>
+                </div>
+            </div>
+
+            <!-- Sector 4 -->
+            <div class="sector-content" id="sector-3">
+                <div class="sector-info">
+                    <h3>Turbine Hall</h3>
+                    <p>Massive industrial hall containing steam turbines and heavy generators converting thermal energy into electrical power transmitted directly to New Sloboda.</p>
+                    <div class="sector-specs">
+                        <div class="spec-item">
+                            <div class="label">Power Gen</div>
+                            <div class="value">3,000 MW</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="label">Vibration</div>
+                            <div class="value">Nominal</div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="openGameModal()">Deploy to Sector</button>
+                </div>
+                <div class="sector-visual">
+                    <i class="fa-solid fa-industry"></i>
+                    <div class="status-tag">SECTOR-TURB-04</div>
+                </div>
+            </div>
+
+            <!-- Sector 5 -->
+            <div class="sector-content" id="sector-4">
+                <div class="sector-info">
+                    <h3>Southern Perimeter Frontline</h3>
+                    <p>Trench networks, roadblocks, and defensive positions manned by the New Sloboda Armed Forces to repel advancing Mexican Army columns.</p>
+                    <div class="sector-specs">
+                        <div class="spec-item">
+                            <div class="label">Distance to Front</div>
+                            <div class="value">1.5 km</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="label">Threat Level</div>
+                            <div class="value" style="color: var(--accent-red);">Active Combat</div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="openGameModal()">Deploy to Sector</button>
+                </div>
+                <div class="sector-visual">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <div class="status-tag">SECTOR-FRONT-05</div>
+                </div>
+            </div>
+
+            <!-- Sector 6 -->
+            <div class="sector-content" id="sector-5">
+                <div class="sector-info">
+                    <h3>Underground Fallout Bunker</h3>
+                    <p>Reinforced subterranean shelter designed to protect plant personnel and government officials during severe nuclear accidents or direct artillery bombardment.</p>
+                    <div class="sector-specs">
+                        <div class="spec-item">
+                            <div class="label">Depth</div>
+                            <div class="value">45 Meters</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="label">Capacity</div>
+                            <div class="value">1,200 Pers.</div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="openGameModal()">Deploy to Sector</button>
+                </div>
+                <div class="sector-visual">
+                    <i class="fa-solid fa-warehouse"></i>
+                    <div class="status-tag">SECTOR-BUNKER-06</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section id="roadmap">
+            <div class="section-title">
+                <i class="fa-solid fa-timeline"></i> Development <span>Roadmap</span>
+            </div>
+            <p class="section-subtitle">Upcoming features, expansions, and updates for Mead Nuclear Plant on Roblox.</p>
+
+            <div class="roadmap-timeline">
+                <div class="timeline-item completed">
+                    <h3>Phase 1: Foundation & Plant Layout</h3>
+                    <p>Initial construction of the reactor core, main control room (BŞU), turbine hall, and Koshulyn Dam water intake structures.</p>
+                </div>
+                <div class="timeline-item completed">
+                    <h3>Phase 2: 1996 Frontline Expansion</h3>
+                    <p>Integration of southern border trenches, military checkpoints, and the Mexican Army invasion scenario.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Phase 3: Interactive Meltdown & Sabotage Systems</h3>
+                    <p>Advanced alarms, emergency SCRAM protocols, coolant pipe breaches, and tactical breach tools for invading forces.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Phase 4: Capital Power Grid Simulation</h3>
+                    <p>Dynamic power distribution mechanics feeding electricity to New Sloboda substations with player-controlled power routing.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="logo-area" style="margin-bottom: 1rem;">
+                    <i class="fa-solid fa-radiation logo-icon"></i>
+                    <div class="logo-text">
+                        <h1>Mead Nuclear Plant</h1>
+                        <p>Department of Energy and Coal Industry</p>
+                    </div>
+                </div>
+                <p>An immersive Roblox game experience depicting the defense of atomic infrastructure during the 1996 New Sloboda conflict.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#lore">Historical Lore</a></li>
+                    <li><a href="#factions">Combat Factions</a></li>
+                    <li><a href="#sectors">Facility Sectors</a></li>
+                    <li><a href="#roadmap">Development Roadmap</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Community</h4>
+                <ul class="footer-links">
+                    <li><a href="https://discord.gg/b9vuB83fd" target="_blank">Discord Community</a></li>
+                    <li><a href="#" onclick="openGameModal(); return false;">Roblox Experience</a></li>
+                    <li><a href="#" onclick="openGroupModal(); return false;">DOE-CI Group</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 1996-2026 Department of Energy and Coal Industry of New Sloboda. All rights reserved.</p>
+            <p>CLASSIFIED // FOR OFFICIAL USE ONLY</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="actionModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h3 id="modalTitle">Deploy to Experience</h3>
+            <p id="modalDesc">Copy the link below or click to launch directly into the Mead Nuclear Plant Roblox experience.</p>
+            <div class="modal-input-group">
+                <input type="text" id="modalLinkInput" value="https://www.roblox.com/games/your-game-id" readonly>
+                <button class="btn" onclick="copyModalLink()">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sector Tabs
+        function switchSector(index) {
+            const tabs = document.querySelectorAll('.sector-tab');
+            const contents = document.querySelectorAll('.sector-content');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            
+            tabs[index].classList.add('active');
+            contents[index].classList.add('active');
+        }
+
+        // Global Alert Switcher
+        let alertState = 0;
+        function toggleGlobalAlert() {
+            alertState = (alertState + 1) % 3;
+            const body = document.body;
+            const dot = document.getElementById('headerDot');
+            const text = document.getElementById('headerStatusText');
+
+            if (alertState === 0) {
+                body.removeAttribute('data-theme');
+                dot.style.backgroundColor = 'var(--accent-green)';
+                dot.style.boxShadow = '0 0 8px var(--accent-green)';
+                text.textContent = 'FACILITY: NOMINAL';
+            } else if (alertState === 1) {
+                body.setAttribute('data-theme', 'highload');
+                dot.style.backgroundColor = 'var(--accent-amber)';
+                dot.style.boxShadow = '0 0 8px var(--accent-amber)';
+                text.textContent = 'FACILITY: FRONTLINE ALERT';
+            } else {
+                body.setAttribute('data-theme', 'alert');
+                dot.style.backgroundColor = 'var(--accent-red)';
+                dot.style.boxShadow = '0 0 8px var(--accent-red)';
+                text.textContent = 'FACILITY: UNDER ATTACK // SCRAM';
+            }
+        }
+
+        // Modal Logic
+        const modal = document.getElementById('actionModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalInput = document.getElementById('modalLinkInput');
+
+        function openGameModal() {
+            modalTitle.textContent = "Play on Roblox";
+            modalDesc.textContent = "Launch the Mead Nuclear Plant experience on Roblox.";
+            modalInput.value = "https://www.roblox.com/games/your-place-id";
+            modal.classList.add('active');
+        }
+
+        function openGroupModal() {
+            modalTitle.textContent = "DOE-CI Group";
+            modalDesc.textContent = "Join the official Department of Energy and Coal Industry group on Roblox.";
+            modalInput.value = "https://www.roblox.com/groups/your-group-id";
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        function copyModalLink() {
+            modalInput.select();
+            navigator.clipboard.writeText(modalInput.value);
+            alert("Link copied to clipboard!");
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
